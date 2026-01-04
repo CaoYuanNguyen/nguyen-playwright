@@ -9,7 +9,11 @@
     "test:chrome": "playwright test --project=chromium",
     "test:debug": "playwright test --debug",
     "test:example": "playwright test example",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "test:login": "playwright test login --project=chromium --headed",
+    "test:login-data": "playwright test test/login-data.spec.ts --project=chromium --headed",
+    "test:home": "playwright test home --project=firefox --headed",
+    "test:my-info": "playwright test myinfo --project=chromium --headed"
   },
   "repository": {
     "type": "git",
@@ -25,5 +29,8 @@
   "devDependencies": {
     "@playwright/test": "^1.57.0",
     "@types/node": "^25.0.3"
+  },
+  "dependencies": {
+    "csv-parse": "^6.1.0"
   }
 }
