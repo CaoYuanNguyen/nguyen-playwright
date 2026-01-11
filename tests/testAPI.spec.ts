@@ -24,6 +24,6 @@ test.describe("API test - expect", () => {
         expect(responseBody).toHaveProperty("statusCode")
         expect(responseBody).toHaveProperty("message")
         expect(responseBody).toHaveProperty("content")
-        expect(responseBody).toHaveProperty("dataTime")
+        expect(responseBody).toHaveProperty("dateTime")
     })
 })

@@ -26,7 +26,7 @@ test.describe("Home Page tests", () => {
     test("Verify các menu có đầy đủ không", async ({page}) => {
         const homePage = new HomePage(page)
 
-        const menuItems = await homePage.getSideBarMenuItems()
+        const menuItems = await homePage.getSidebarMenuItems()
 
         // kiểm tra
         // case 1: menuItems > 0
