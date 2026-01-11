@@ -8,6 +8,8 @@ name: CI - Chạy test
 on:
   push:
     branches: [main, master]
+  pull_request:
+    branches: [main, master]
 
 jobs:
   test: # define step test
@@ -39,4 +41,4 @@ jobs:
 
       # B5: chạy test
       - name: Run playwright test
-        run: npx playwright test
+        run: npm run test:get-by-role
