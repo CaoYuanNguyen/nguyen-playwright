@@ -1,4 +1,5 @@
 import {Page, Locator} from '@playwright/test'
+import { highLightAndScreenshot } from '../utils/screenshot';
 
 export class LoginPage {
     // locator
@@ -6,7 +7,7 @@ export class LoginPage {
     readonly usernameInput: Locator 
     readonly passwordInput: Locator
     readonly loginButton: Locator
-    readonly homeTitle: Locator // verify login thanh cong
+    // readonly homeTitle: Locator // verify login thanh cong
 
     // function: login, validate
     constructor(page: Page) { // ham khoi tao
@@ -25,11 +26,13 @@ export class LoginPage {
         await this.page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login?fbclid=IwY2xjawPFssxleHRuA2FlbQIxMABicmlkETFsZXZFMGVVN3c2MGt6emUyc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHuyMmWwED31IL3qCpB3VbaNqTzUfZkXJ3Ekv8S2Dx22-soe5d8tZ9L7ISfvK_aem_VLHDKUCf909XvRJgYMmS8A")
         // b2: fill username vao input 
         await this.usernameInput.fill(username)
+        await highLightAndScreenshot(this.page, this.usernameInput, "loginTest", "fill_username")
 
         // b3: fill password vao input
         await this.passwordInput.fill(password)
 
         // b4: enter nut login 
+         await highLightAndScreenshot(this.page, this.loginButton, "loginTest", "click_login_btn")
         await this.loginButton.click()
         
     }

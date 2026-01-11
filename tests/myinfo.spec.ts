@@ -23,7 +23,7 @@ test.describe("My Info tests", () => {
         await myInfoPage.avatarWrapper.waitFor({state: 'visible', timeout:10000})
     })
 
-    test("Upload avatar với file name testing01", async ({page}) => {
+    test("Upload avatar với file name deadline_n", async ({page}) => {
         const myInfoPage = new MyInfoPage(page)
 
         await myInfoPage.uploadAvatar()

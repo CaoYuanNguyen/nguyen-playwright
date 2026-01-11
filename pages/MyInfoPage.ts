@@ -4,6 +4,9 @@
 // private final By fileInput = By.cssSelector("input[type='file']");
 
 import {Page, Locator} from "@playwright/test"
+import { join } from "path"
+
+
 
 export class MyInfoPage {
     readonly page: Page;
@@ -13,7 +16,7 @@ export class MyInfoPage {
     readonly uploadBtn: Locator;
     readonly fileInput: Locator;
 
-    constructor(page: page) {
+    constructor(page: Page) {
         this.page = page
 
         this.avatarWrapper = page.locator(".orangehrm-edit-employee-image-wrapper")
