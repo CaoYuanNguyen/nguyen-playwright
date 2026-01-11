@@ -18,7 +18,7 @@ test.describe("My Info tests", () => {
 
         await homePage.sidebarMenuNames.first().waitFor({timeout: 10000})
 
-        await homePage.clickMenuInfo()
+        await homePage.clickMenuMyInfo()
 
         await myInfoPage.avatarWrapper.waitFor({state: 'visible', timeout:10000})
     })

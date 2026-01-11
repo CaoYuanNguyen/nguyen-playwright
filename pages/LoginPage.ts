@@ -2,47 +2,59 @@ import {Page, Locator} from '@playwright/test'
 import { highLightAndScreenshot } from '../utils/screenshot';
 
 export class LoginPage {
-    // locator
-    readonly page: Page ; // Page object giup tuong tac voi trang web
+    readonly page: Page;
     readonly usernameInput: Locator 
     readonly passwordInput: Locator
     readonly loginButton: Locator
-    // readonly homeTitle: Locator // verify login thanh cong
 
-    // function: login, validate
-    constructor(page: Page) { // ham khoi tao
+    constructor(page: Page) {
         this.page = page;
-
         this.usernameInput = page.locator('input[name="username"]')
         this.passwordInput = page.locator('input[name="password"]')
         this.loginButton = page.locator('button[type="submit"]')
-
     }
 
     async login(username: string, password: string): Promise<void> {
-        // đợi vài giây để load trang
-        await this.page.waitForTimeout(3000)
-        // b1: navigate vao web page login 
-        await this.page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login?fbclid=IwY2xjawPFssxleHRuA2FlbQIxMABicmlkETFsZXZFMGVVN3c2MGt6emUyc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHuyMmWwED31IL3qCpB3VbaNqTzUfZkXJ3Ekv8S2Dx22-soe5d8tZ9L7ISfvK_aem_VLHDKUCf909XvRJgYMmS8A")
-        // b2: fill username vao input 
+        // Navigate to login page
+        await this.page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+        
+        // Đợi page load xong
+        await this.page.waitForLoadState('networkidle')
+        
+        // Fill username
         await this.usernameInput.fill(username)
         await highLightAndScreenshot(this.page, this.usernameInput, "loginTest", "fill_username")
 
-        // b3: fill password vao input
+        // Fill password
         await this.passwordInput.fill(password)
 
-        // b4: enter nut login 
-         await highLightAndScreenshot(this.page, this.loginButton, "loginTest", "click_login_btn")
-        await this.loginButton.click()
+        // Click login và đợi navigation
+        await highLightAndScreenshot(this.page, this.loginButton, "loginTest", "click_login_btn")
         
+        // Click và đợi điều hướng hoặc đợi response
+        await Promise.all([
+            this.page.waitForLoadState('networkidle'),
+            this.loginButton.click()
+        ])
+        
+        // Đợi thêm chút để đảm bảo URL đã update
+        await this.page.waitForTimeout(2000)
     }
 
     async isLoginSuccessfull(): Promise<boolean> {
-        //  case 1: test URL co chu dashboard
-        let url = this.page.url();
-        return url.includes("dashboard")
-
-
+        try {
+            // Kiểm tra URL có chứa dashboard
+            const url = this.page.url();
+            const hasaDashboard = url.includes("dashboard");
+            
+            // Hoặc kiểm tra thêm element đặc trưng của dashboard page
+            const dashboardElement = this.page.locator('h6:has-text("Dashboard")');
+            const isVisible = await dashboardElement.isVisible();
+            
+            return hasaDashboard;
+        } catch (error) {
+            console.error('Error checking login success:', error);
+            return false;
+        }
     }
-
 }
