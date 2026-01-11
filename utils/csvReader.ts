@@ -2,6 +2,7 @@
 // fs/promises -> có sẵn
 // path -> tìm đường dẫn tuyệt đối
 // csv-parse -> để phân tích file csv 
+// 
 
 import {readFile} from 'fs/promises';
 import {join} from 'path'
